@@ -1,18 +1,18 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
-  "name": "io.github.reliai-in/pramana-mcp",
+  "name": "io.github.loopg/pramana-mcp",
   "description": "Read your recorded AI agent runs, and what changed when you swapped a model or prompt.",
   "repository": {
     "url": "https://github.com/reliai-in/pramana-mcp",
     "source": "github"
   },
-  "version": "0.1.2",
+  "version": "0.1.3",
   "websiteUrl": "https://www.reliai.in",
   "packages": [
     {
       "registryType": "pypi",
       "identifier": "pramana-mcp",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "transport": {
         "type": "stdio"
       },

@@ -1,5 +1,7 @@
 # Pramana MCP server
 
+mcp-name: io.github.loopg/pramana-mcp
+
 **Decide whether a prompt or model change is safe to ship, by running it against your own
 production runs.**
 
