@@ -7,3 +7,6 @@ build/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+
+# local listing-watch state (cron job, not part of the package)
+.listing-watch/
