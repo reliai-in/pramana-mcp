@@ -1,0 +1,59 @@
+[project]
+name = "pramana-mcp"
+version = "0.1.1"
+requires-python = ">=3.12"
+description = "MCP server for Pramana — ask your assistant what changed when you swapped a model or edited a prompt, against your own recorded production runs."
+readme = "README.md"
+license = "Apache-2.0"
+authors = [{ name = "Sahil Pandey", email = "sahil@reliai.in" }]
+keywords = ["mcp", "model-context-protocol", "ai-agents", "replay", "audit", "evidence", "llm-observability"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: Apache Software License",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Software Development :: Testing",
+]
+dependencies = [
+  "mcp>=2.0",
+  "pramana-verify>=0.0.2",
+]
+
+[project.scripts]
+pramana-mcp = "pramana_mcp.__main__:main"
+
+[project.urls]
+Homepage = "https://www.reliai.in"
+Documentation = "https://www.reliai.in/docs/"
+Repository = "https://github.com/reliai/pramana-mcp"
+Issues = "https://github.com/reliai/pramana-mcp/issues"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pramana_mcp"]
+
+[dependency-groups]
+dev = [
+  "ruff>=0.6",
+  "mypy>=1.11",
+  "pytest>=8.0",
+]
+
+[tool.ruff]
+line-length = 110
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "BLE"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+# `mcp` ships types; `pramana_verify` does not yet.
+[[tool.mypy.overrides]]
+module = ["pramana_verify.*"]
+ignore_missing_imports = true

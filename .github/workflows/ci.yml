@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Install
+        # --all-extras so the dev group (ruff, mypy, pytest) comes in. This
+        # package is deliberately NOT part of the Pramana monorepo's uv
+        # workspace -- `mcp` drags in pydantic, uvicorn and httpx, and none of
+        # those belong in the SDK's lock file. The cost of that separation is
+        # that the monorepo's `make lint` does not cover this package, which is
+        # exactly what this workflow exists to replace.
+        run: uv sync --all-extras --python ${{ matrix.python-version }}
+
+      - name: ruff (lint)
+        run: uv run ruff check .
+
+      - name: ruff (format)
+        run: uv run ruff format --check .
+
+      - name: mypy
+        run: uv run mypy src
+
+      - name: pytest
+        run: uv run pytest -q
