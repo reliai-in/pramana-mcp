@@ -1,0 +1,37 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.reliai-in/pramana-mcp",
+  "description": "Read your recorded AI agent runs, and what changed when you swapped a model or prompt.",
+  "repository": {
+    "url": "https://github.com/reliai-in/pramana-mcp",
+    "source": "github"
+  },
+  "version": "0.1.2",
+  "websiteUrl": "https://www.reliai.in",
+  "packages": [
+    {
+      "registryType": "pypi",
+      "identifier": "pramana-mcp",
+      "version": "0.1.2",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "PRAMANA_API_KEY",
+          "description": "A Pramana engineer or admin API key, from Settings -> API keys at https://www.reliai.in/. An auditor key never receives recorded prompts or responses, so reads would come back empty.",
+          "isRequired": true,
+          "isSecret": true,
+          "format": "string"
+        },
+        {
+          "name": "PRAMANA_API_URL",
+          "description": "Base URL of the Pramana API. Only set this if you are self-hosting; it defaults to the hosted API.",
+          "isRequired": false,
+          "isSecret": false,
+          "format": "string"
+        }
+      ]
+    }
+  ]
+}
