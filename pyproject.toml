@@ -1,6 +1,6 @@
 [project]
 name = "pramana-mcp"
-version = "0.1.1"
+version = "0.1.2"
 requires-python = ">=3.12"
 description = "MCP server for Pramana — ask your assistant what changed when you swapped a model or edited a prompt, against your own recorded production runs."
 readme = "README.md"
@@ -26,8 +26,8 @@ pramana-mcp = "pramana_mcp.__main__:main"
 [project.urls]
 Homepage = "https://www.reliai.in"
 Documentation = "https://www.reliai.in/docs/"
-Repository = "https://github.com/reliai/pramana-mcp"
-Issues = "https://github.com/reliai/pramana-mcp/issues"
+Repository = "https://github.com/reliai-in/pramana-mcp"
+Issues = "https://github.com/reliai-in/pramana-mcp/issues"
 
 [build-system]
 requires = ["hatchling"]
