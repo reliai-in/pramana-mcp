@@ -1,0 +1,87 @@
+{
+  "artifact_type": "production_run",
+  "format_version": 1,
+  "bundle_id": "evb_62e452bb3b70431f",
+  "tenant_id": "sample-tenant",
+  "trace_id": "refund-SAMPLE-4417-1fb71a",
+  "from_seq": 1,
+  "to_seq": 2,
+  "events": [
+    {
+      "event_id": "01a0e971-a059-722f-818d-3c6c174d22d0",
+      "tenant_id": "sample-tenant",
+      "trace_id": "refund-SAMPLE-4417-1fb71a",
+      "agent_id": "default",
+      "call_site_id": "57b37f0e11b641ab6bad3daf3e2518d3",
+      "logical_seq": "1",
+      "vclock": "eyJkZWZhdWx0IjoxfQ==",
+      "kind": "LLM_CALL",
+      "input_hash": "a7eace82c291a8a4e9dc50b219219b574db6f017161ee64c7335c9044b60b4c4",
+      "payload_ref": "46ac858eb920877e39113c12b48139d8884812ff788b8b753fb461d1d2090532",
+      "ts_wall_ns": "1790622933081933000",
+      "this_hash": "644fc16c5deb72a122f45d7757100c98c241bd2677dfc3cf281d4d04a5ad4f46",
+      "attrs": {
+        "model": "gpt-4o-mini",
+        "latency_ms": "0"
+      },
+      "prev_hash": "",
+      "call_site_ordinal": "0"
+    },
+    {
+      "event_id": "01a0e971-a059-7949-ba5d-a0f6b7c01566",
+      "tenant_id": "sample-tenant",
+      "trace_id": "refund-SAMPLE-4417-1fb71a",
+      "agent_id": "default",
+      "call_site_id": "4a2db46ad7a8b9de64c2f34e75364420",
+      "logical_seq": "2",
+      "vclock": "eyJkZWZhdWx0IjoyfQ==",
+      "kind": "TOOL_EXEC",
+      "input_hash": "39e86a29f18defd06c03fc2c8160de1fb3ccb892a7ecbb63a418646938620b77",
+      "payload_ref": "535f17dac0ea60ae69752b0e1cb56f3391f2b5652cc972b98c8e621cfea939ab",
+      "ts_wall_ns": "1790622933081990000",
+      "prev_hash": "644fc16c5deb72a122f45d7757100c98c241bd2677dfc3cf281d4d04a5ad4f46",
+      "this_hash": "74f279e89ff4183782fa51f3e8a599ad600d473da204c1efa2504419e932a4af",
+      "attrs": {
+        "latency_ms": "0",
+        "tool": "issue_refund"
+      },
+      "call_site_ordinal": "0"
+    }
+  ],
+  "blobs": {
+    "46ac858eb920877e39113c12b48139d8884812ff788b8b753fb461d1d2090532": {
+      "input": {
+        "messages": [
+          {
+            "content": "Order SAMPLE-4417 arrived nine days late. The customer asks for a refund. Our policy refunds shipping on late delivery when the item was still delivered.",
+            "role": "user"
+          }
+        ],
+        "model": "gpt-4o-mini"
+      },
+      "output": {
+        "choices": [
+          {
+            "message": {
+              "content": "Refund the shipping fee of 12.00 only; the item was delivered."
+            }
+          }
+        ]
+      }
+    },
+    "535f17dac0ea60ae69752b0e1cb56f3391f2b5652cc972b98c8e621cfea939ab": {
+      "input": {
+        "amount_inr": 12.0,
+        "order_id": "SAMPLE-4417"
+      },
+      "output": {
+        "order_id": "SAMPLE-4417",
+        "status": "refunded"
+      }
+    }
+  },
+  "merkle_root": "4fd442ccbf515c6018c0d7908bd1b1f9853df86894e67e8c40b5d1590f48418d",
+  "signature_hex": "4811d71998466ec4a622e48e1a18f9e24d9a1eb85f27b036cd50ac6a0e9e175a836f9c139f79542ba83082c51786009fb9d3c0d25d66a2ddc1b5cb006dd4f601",
+  "signer_public_key_hex": "b1caad2978655a2eb7756c23017ec0a92a28da7c37251d44cae27c374faa8f2c",
+  "code_version": "sample-agent-1.0"
+}

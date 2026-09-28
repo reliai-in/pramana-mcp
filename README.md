@@ -152,6 +152,26 @@ These are the same limitations as the SDK. They are not softened for a registry 
   and needs no account, but today you still obtain the key from us — which is not the same as
   independent verification, and is not claimed as such.
 
+## Sample evidence bundles
+
+`evidence-samples/` holds two signed bundles, a tampered copy of each, and the key that checks
+them. No account, no network:
+
+```console
+$ pip install pramana-verify
+$ pramana-verify evidence-samples/production-run.json \
+    --pubkey evidence-samples/sample-public-key.txt
+OK — 2 event(s), merkle_root=4fd442ccbf515c6018c0d7908bd1b1f9853df86894e67e8c40b5d1590f48418d
+
+$ pramana-verify evidence-samples/production-run.TAMPERED.json \
+    --pubkey evidence-samples/sample-public-key.txt
+TAMPERED / INVALID:
+  - payload …: content does not hash to its reference — this recorded prompt or response was tampered with
+```
+
+`evidence-samples/FORMAT.md` is the field-by-field specification. Those files are signed with a
+sample key, not the key that signs real bundles.
+
 ---
 
 [Documentation](https://www.reliai.in/docs/) · [reliai.in](https://www.reliai.in/) ·
