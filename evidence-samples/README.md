@@ -8,6 +8,11 @@ open a tampered copy, see the single value we changed, and watch the same comman
 
 ## Check them yourself
 
+**Python 3.9 or newer.** That floor is deliberately low: this is the one tool we hand to people
+whose environment we do not control, and it needs nothing modern — it reads JSON and checks a
+signature. Tested on 3.9, 3.10, 3.11, 3.12 and 3.13, by installing from PyPI and verifying these
+exact files.
+
 ```console
 $ pip install pramana-verify
 $ pramana-verify production-run.json --pubkey sample-public-key.txt
