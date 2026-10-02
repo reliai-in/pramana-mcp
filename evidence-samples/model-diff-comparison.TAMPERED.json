@@ -1,18 +1,18 @@
 {
   "artifact_type": "model_diff_comparison",
-  "format_version": 2,
+  "format_version": 3,
   "disclaimer": "This is a MODEL-DIFF COMPARISON, not a production-run record. It attests that a comparison ran under the configuration below and concluded the results below -- never that these traces are what the agent did in production. change_id is a label supplied by the caller. This bundle attests the comparison and its results, not the contents of the change the label names. models_observed is a fact about what ran -- every model name seen across the comparison -- not a claim about which model the change under test targeted; change_id is what names the change. The field-by-field specification for this artifact type is at https://github.com/reliai-in/pramana-mcp/blob/main/evidence-samples/FORMAT.md",
-  "bundle_id": "mdb_a67afec1d4a24204",
+  "bundle_id": "mdb_1c4eaab898014610",
   "tenant_id": "sample-tenant",
   "change_id": "refund-policy-2026-Q3",
-  "signed_at": "2026-10-02T19:26:10.456971+00:00",
-  "comparison_run_started_at": "2026-10-03T00:56:10.278285+05:30",
-  "comparison_run_completed_at": "2026-10-03T00:56:10.278285+05:30",
+  "signed_at": "2026-10-02T20:39:13.841944+00:00",
+  "comparison_run_started_at": "2026-10-03T02:09:13.663331+05:30",
+  "comparison_run_completed_at": "2026-10-03T02:09:13.663331+05:30",
   "traces_submitted": 1,
   "traces_included": 1,
   "traces_excluded": 0,
   "trace_ids": [
-    "refund-SAMPLE-4417-f9cd66"
+    "refund-SAMPLE-4417-9c76c1"
   ],
   "excluded_traces": [],
   "models_observed": [
@@ -21,6 +21,7 @@
   "exclude_keys": [],
   "classifier_version": "1.0.0",
   "redactor_active": false,
+  "redaction_mismatch_accepted": false,
   "mode": {
     "clock_and_rng": "frozen_replayed_from_recording",
     "tools": "live_tools"
@@ -40,7 +41,7 @@
     "unclassified": 0
   },
   "per_trace": {
-    "refund-SAMPLE-4417-f9cd66": {
+    "refund-SAMPLE-4417-9c76c1": {
       "bucket_counts": {
         "behavioural": 1,
         "consequent": 0,
@@ -69,11 +70,27 @@
       "halted_collapsed_into_consequent": 0,
       "models_observed": [
         "gpt-4o-mini"
+      ],
+      "findings": [
+        {
+          "call_site_id": "51ef26e443aeb31c8479321f0e2dfb83",
+          "call_site_ordinal": 0,
+          "classification": "COSMETIC",
+          "label": "\"Order SAMPLE-4417 arrived nine days late. The cu\u2026\"",
+          "detail": "choices: [{'message': {'content': 'Refund the shipping fee of 12.00 only; the item was delivered.'}}] -> [{'message': {'content': 'Refund the full order value of 249.00.'}}]"
+        },
+        {
+          "call_site_id": "c5b93d0be1ef674f33a9e0bce66dffc8",
+          "call_site_ordinal": 0,
+          "classification": "BEHAVIOURAL",
+          "label": "issue_refund",
+          "detail": "amount_inr: 12.0 -> 12.0"
+        }
       ]
     }
   },
   "instrumentation_coverage_disclosure": "coverage is limited to instrumented calls \u2014 anything not wrapped by pramana is invisible",
-  "content_hash": "bf755b529c580a6d64740b0c9ea6cbe9bb7b45dbf4b0b98be5b5bb30d6acf173",
-  "signature_hex": "7fd94c8911158ebc6e38b40948803b80dae3c9e36ec1f772ca118710561fb65b48ae8b21e47a15997c11c9d363cb952a7dff0097e0a6758c547b1edcc0b6330a",
-  "signer_public_key_hex": "1e19d0ca564ddcd3b4c73bc4931e97d7137a70c3963523b242d1c62bedddb084"
+  "content_hash": "a08f2fbe37d1b37cc6ded9791f54dda70207b9762bafe789816c10a0bd6fc058",
+  "signature_hex": "3d2e9f1a9e3b488021293ec9a5ef27ea29cdcef439343412158249ecae6d71258a84f4ace9185206821a74b1d18844ef7f262d0abc253ce925ae8b05a2788a01",
+  "signer_public_key_hex": "20b3d73eb4546cd87a8b38b677bafad30e4d50c02573d6c1173c4a95f3637cb8"
 }

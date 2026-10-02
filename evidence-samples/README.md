@@ -14,9 +14,9 @@ signature. Tested on 3.9, 3.10, 3.11, 3.12 and 3.13, by installing from PyPI and
 exact files.
 
 ```console
-$ pip install 'pramana-verify>=0.0.4'
+$ pip install 'pramana-verify>=0.0.5'
 $ pramana-verify production-run.json --pubkey sample-public-key.txt
-OK — 2 event(s), merkle_root=bef9b85cca33e27103f2f583b4913e7d3c3ed51917474cafdefcf352ccc517c4
+OK — 2 event(s), merkle_root=6ec957f1ec1443e56c01bab5440df06cfbdd6bbd67c9e8c35398d02d1a840a3a
 ```
 
 ```console
@@ -77,30 +77,35 @@ changed prompt (`change_id: refund-policy-2026-Q3`). The new prompt refunds the 
 
 One of those is a rewrite. The other is money. Separating them is the job.
 
-**Read what the bundle itself asserts, though, not the summary above.** That two-line listing is
-what the CLI printed when the comparison ran. What the *signed artifact* contains is this:
+**What the bundle itself asserts**, which since `format_version: 3` includes what actually
+changed:
 
 ```json
 "bucket_counts": { "behavioural": 1, "cosmetic": 1, "unchanged": 0, … },
 "per_trace": { "refund-SAMPLE-4417-…": {
     "call_sites_compared": 2,
     "control_run_present": true,
-    "control_confirmations": [ {
-        "call_site_id": "c5b93d0be1ef674f33a9e0bce66dffc8",
-        "classification": "BEHAVIOURAL",
-        "control_verdict": "confirmed" } ] } }
+    "control_confirmations": [ { "call_site_id": "c5b93d0be1ef674f33a9e0bce66dffc8", "classification": "BEHAVIOURAL",
+                                 "control_verdict": "confirmed" } ],
+    "findings": [
+      { "classification": "COSMETIC",    "label": "\"Order SAMPLE-4417 arrived nine days late…\"",
+        "detail": "choices: […12.00…] -> […249.00…]" },
+      { "classification": "BEHAVIOURAL", "label": "issue_refund",
+        "detail": "amount_inr: 12.0 -> 249.0" } ] } }
 ```
 
-So the bundle attests **how many** call sites landed in each outcome, **which** call site the
-behavioural finding was at, and that a **control run** — the original prompt replayed a second
-time — came back clean, making that finding a real consequence of the change rather than the
-model being non-deterministic. It does **not** carry the human-readable "what moved" string. The
-tool name `issue_refund` and the text `amount_inr: 12.0 -> 249.0` are not in this file; they live
-in the CLI output and the dashboard. Grep the file for `249` and you will not find it.
+So the bundle attests how many call sites landed in each outcome, **which** ones, **what changed
+at each**, and that a control run — the original prompt replayed a second time — came back clean,
+making that finding a consequence of the change rather than the model being non-deterministic.
 
-That is a real limit of the current format and it is stated here rather than glossed: a reviewer
-holding only this bundle knows that one decision changed and where, but has to go back to the
-run to see what it changed to.
+Until 3 October 2026 it carried only the counts and the call site id. A reviewer holding the
+bundle knew one decision had changed and where, and had to go back to the run to see what it
+changed to — which is the second question an auditor asks, so the artifact was answering one of
+two. `findings` is what closed that.
+
+Only **root** findings appear. A finding that diverged because an earlier one did is counted in
+`bucket_counts` but not listed: one root cause that produced forty downstream differences is one
+thing to investigate, not forty.
 
 ## Read this before quoting the check
 

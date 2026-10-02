@@ -25,8 +25,9 @@ was altered"* are different facts, and telling an auditor the second when the fi
 the worst output a verifier could produce. `pramana-verify` 0.0.1 conflated them; it was fixed,
 and there are tests whose only job is keeping the word "tampered" out of that response.
 
-Both types are at **`format_version: 2`**, and `pramana-verify` 0.0.4 or newer is required to
-read them. A bundle with a higher version than your verifier understands is unsupported, not
+`production_run` is at **`format_version: 2`** and `model_diff_comparison` at **`3`**; the floors
+are independent, because they change for independent reasons. `pramana-verify` 0.0.5 or newer is
+required to read a comparison bundle. A bundle with a higher version than your verifier understands is unsupported, not
 invalid — upgrade with `pip install -U pramana-verify`.
 
 A bundle **below** your verifier's floor is also unsupported, and for a reason worth stating: on
@@ -68,6 +69,8 @@ what it attests, and says so rather than reporting anything about its integrity.
 | `bucket_counts` | a strict partition: every compared call site lands in exactly one bucket, and they sum to the sites compared. |
 | `per_trace` | the same counts per trace, plus `control_confirmations`, `control_run_present`, `halted`. |
 | `instrumentation_coverage_disclosure` | states in the artifact that coverage is limited to instrumented calls. |
+| `findings` | per trace, the **root** findings with `label` and `detail` — what actually changed, e.g. `issue_refund` / `amount_inr: 12.0 -> 249.0`. Added at version 3; before that a bundle carried only counts. Consequent findings are counted but not listed. |
+| `redaction_mismatch_accepted` | `true` when the operator bypassed the refusal that fires if the recording was made under a redactor and the comparison was not. When true, differences confined to redacted fields are not real findings, and a genuine change may read as `unstable` because the control run carries the same mismatch. |
 | `content_hash` | over the canonical form of every field above. |
 | `signature_hex` | over `content_hash`. |
 
