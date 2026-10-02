@@ -158,7 +158,7 @@ These are the same limitations as the SDK. They are not softened for a registry 
 them. No account, no network:
 
 ```console
-$ pip install pramana-verify
+$ pip install 'pramana-verify>=0.0.4'
 $ pramana-verify evidence-samples/production-run.json \
     --pubkey evidence-samples/sample-public-key.txt
 OK — 2 event(s), merkle_root=4fd442ccbf515c6018c0d7908bd1b1f9853df86894e67e8c40b5d1590f48418d

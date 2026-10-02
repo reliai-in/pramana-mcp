@@ -1,18 +1,18 @@
 {
   "artifact_type": "model_diff_comparison",
-  "format_version": 1,
+  "format_version": 2,
   "disclaimer": "This is a MODEL-DIFF COMPARISON, not a production-run record. It attests that a comparison ran under the configuration below and concluded the results below -- never that these traces are what the agent did in production. change_id is a label supplied by the caller. This bundle attests the comparison and its results, not the contents of the change the label names. models_observed is a fact about what ran -- every model name seen across the comparison -- not a claim about which model the change under test targeted; change_id is what names the change. The field-by-field specification for this artifact type is at https://github.com/reliai-in/pramana-mcp/blob/main/evidence-samples/FORMAT.md",
-  "bundle_id": "mdb_c7834f10e8d54c25",
+  "bundle_id": "mdb_a67afec1d4a24204",
   "tenant_id": "sample-tenant",
   "change_id": "refund-policy-2026-Q3",
-  "signed_at": "2026-09-28T19:15:33.427714+00:00",
-  "comparison_run_started_at": "2026-09-29T00:45:33.252847+05:30",
-  "comparison_run_completed_at": "2026-09-29T00:45:33.252847+05:30",
+  "signed_at": "2026-10-02T19:26:10.456971+00:00",
+  "comparison_run_started_at": "2026-10-03T00:56:10.278285+05:30",
+  "comparison_run_completed_at": "2026-10-03T00:56:10.278285+05:30",
   "traces_submitted": 1,
   "traces_included": 1,
   "traces_excluded": 0,
   "trace_ids": [
-    "refund-SAMPLE-4417-1fb71a"
+    "refund-SAMPLE-4417-f9cd66"
   ],
   "excluded_traces": [],
   "models_observed": [
@@ -35,10 +35,12 @@
     "unstable": 0,
     "reordered": 0,
     "halted": 0,
+    "no_recording": 0,
+    "not_called": 0,
     "unclassified": 0
   },
   "per_trace": {
-    "refund-SAMPLE-4417-1fb71a": {
+    "refund-SAMPLE-4417-f9cd66": {
       "bucket_counts": {
         "behavioural": 1,
         "consequent": 0,
@@ -49,12 +51,14 @@
         "unstable": 0,
         "reordered": 0,
         "halted": 0,
+        "no_recording": 0,
+        "not_called": 0,
         "unclassified": 0
       },
       "call_sites_compared": 2,
       "control_confirmations": [
         {
-          "call_site_id": "4a2db46ad7a8b9de64c2f34e75364420",
+          "call_site_id": "c5b93d0be1ef674f33a9e0bce66dffc8",
           "call_site_ordinal": 0,
           "classification": "BEHAVIOURAL",
           "control_verdict": "confirmed"
@@ -69,7 +73,7 @@
     }
   },
   "instrumentation_coverage_disclosure": "coverage is limited to instrumented calls \u2014 anything not wrapped by pramana is invisible",
-  "content_hash": "60093d4dfd18859672ed0a784d9c269e4cc7b18516b07570bbc795b0fc5e0dd4",
-  "signature_hex": "e054166664d551d96f864830462b6a5b8d998047dadd11d7a0141234befdcde78c2b9d55e95793cb764218d1e3bac6a60b4bd56946da2b956c0ce671ed377906",
-  "signer_public_key_hex": "b1caad2978655a2eb7756c23017ec0a92a28da7c37251d44cae27c374faa8f2c"
+  "content_hash": "bf755b529c580a6d64740b0c9ea6cbe9bb7b45dbf4b0b98be5b5bb30d6acf173",
+  "signature_hex": "7fd94c8911158ebc6e38b40948803b80dae3c9e36ec1f772ca118710561fb65b48ae8b21e47a15997c11c9d363cb952a7dff0097e0a6758c547b1edcc0b6330a",
+  "signer_public_key_hex": "1e19d0ca564ddcd3b4c73bc4931e97d7137a70c3963523b242d1c62bedddb084"
 }

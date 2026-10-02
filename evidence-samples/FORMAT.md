@@ -25,8 +25,15 @@ was altered"* are different facts, and telling an auditor the second when the fi
 the worst output a verifier could produce. `pramana-verify` 0.0.1 conflated them; it was fixed,
 and there are tests whose only job is keeping the word "tampered" out of that response.
 
-Both types are currently at `format_version: 1`. A bundle with a higher version than your
-verifier understands is unsupported, not invalid — upgrade with `pip install -U pramana-verify`.
+Both types are at **`format_version: 2`**, and `pramana-verify` 0.0.4 or newer is required to
+read them. A bundle with a higher version than your verifier understands is unsupported, not
+invalid — upgrade with `pip install -U pramana-verify`.
+
+A bundle **below** your verifier's floor is also unsupported, and for a reason worth stating: on
+3 October 2026 the way a call site is identified changed, so a `format_version: 1` bundle records
+identities computed a different way and counts them into nine buckets rather than today's eleven.
+Such a bundle may be entirely intact and correctly signed — this verifier simply cannot interpret
+what it attests, and says so rather than reporting anything about its integrity.
 
 ## `production_run`
 
@@ -64,10 +71,10 @@ verifier understands is unsupported, not invalid — upgrade with `pip install -
 | `content_hash` | over the canonical form of every field above. |
 | `signature_hex` | over `content_hash`. |
 
-### `bucket_counts` — the ten names
+### `bucket_counts` — the twelve names
 
 `behavioural`, `consequent`, `superseded`, `cosmetic`, `unchanged`, `errored`, `unstable`,
-`reordered`, `halted`, `unclassified`.
+`reordered`, `halted`, `no_recording`, `not_called`, `unclassified`.
 
 `behavioural` is a decision that changed. `cosmetic` is wording that changed while the decision
 did not. `consequent` diverged only because an earlier step on the same run diverged — one root
@@ -75,6 +82,13 @@ cause that produced forty downstream differences is one thing to investigate, no
 keeping them in separate buckets is what makes that true in the artifact and not just in a
 dashboard. `unstable` is a finding the control run reproduced, i.e. the old model wandering on
 its own rather than your change.
+
+`no_recording` and `not_called` were added on 3 October 2026 and are deliberately **not**
+behavioural. A call site is identified by the text of the call, so editing the call itself —
+renaming a variable inside it — makes it a new site: the run reports `no_recording` rather than
+claiming a decision changed. `not_called` means a recorded call is no longer present in the
+source at all. A recorded call that still exists and simply was not reached this run stays
+`behavioural`, because that is the agent deciding differently, which is the finding worth having.
 
 ### `mode`
 

@@ -14,9 +14,9 @@ signature. Tested on 3.9, 3.10, 3.11, 3.12 and 3.13, by installing from PyPI and
 exact files.
 
 ```console
-$ pip install pramana-verify
+$ pip install 'pramana-verify>=0.0.4'
 $ pramana-verify production-run.json --pubkey sample-public-key.txt
-OK — 2 event(s), merkle_root=4fd442ccbf515c6018c0d7908bd1b1f9853df86894e67e8c40b5d1590f48418d
+OK — 2 event(s), merkle_root=bef9b85cca33e27103f2f583b4913e7d3c3ed51917474cafdefcf352ccc517c4
 ```
 
 ```console
@@ -86,7 +86,7 @@ what the CLI printed when the comparison ran. What the *signed artifact* contain
     "call_sites_compared": 2,
     "control_run_present": true,
     "control_confirmations": [ {
-        "call_site_id": "4a2db46ad7a8b9de64c2f34e75364420",
+        "call_site_id": "c5b93d0be1ef674f33a9e0bce66dffc8",
         "classification": "BEHAVIOURAL",
         "control_verdict": "confirmed" } ] } }
 ```
