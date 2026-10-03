@@ -155,18 +155,20 @@ These are the same limitations as the SDK. They are not softened for a registry 
 ## Sample evidence bundles
 
 `evidence-samples/` holds two signed bundles, a tampered copy of each, and the key that checks
-them. No account, no network:
+them. No account, no network. The key is `sample-public-key.txt` in that directory — a separate,
+sample-only key, not the one a production deployment publishes at
+`/.well-known/pramana-evidence-public-key`:
 
 ```console
-$ pip install 'pramana-verify>=0.0.5'
+$ pip install 'pramana-verify>=0.0.6'
 $ pramana-verify evidence-samples/production-run.json \
     --pubkey evidence-samples/sample-public-key.txt
-OK — 2 event(s), merkle_root=4fd442ccbf515c6018c0d7908bd1b1f9853df86894e67e8c40b5d1590f48418d
+OK — 2 event(s), merkle_root=6ec957f1ec1443e56c01bab5440df06cfbdd6bbd67c9e8c35398d02d1a840a3a
 
 $ pramana-verify evidence-samples/production-run.TAMPERED.json \
     --pubkey evidence-samples/sample-public-key.txt
 TAMPERED / INVALID:
-  - payload …: content does not hash to its reference — this recorded prompt or response was tampered with
+  - payload 535f17dac0ea...: content does not hash to its reference — this recorded prompt or response was tampered with
 ```
 
 `evidence-samples/FORMAT.md` is the field-by-field specification. Those files are signed with a
