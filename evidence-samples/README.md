@@ -6,6 +6,12 @@ them. Nothing here needs a Pramana account, and the check runs offline.
 The point is that you don't have to take our word for it. Run the check, watch it pass. Then
 open a tampered copy, see the single value we changed, and watch the same command fail.
 
+**The key is `sample-public-key.txt`, in this directory — not the production key.** These samples
+are signed by a separate, sample-only key. Pramana's production deployment publishes its own key at
+`https://reliai.in/api/.well-known/pramana-evidence-public-key`, and that one will **not** verify
+these files, by design: demo artifacts and real customer bundles should not be indistinguishable by
+signer. Use `sample-public-key.txt` here, and a deployment's own key for a bundle from it.
+
 ## Check them yourself
 
 **Python 3.9 or newer.** That floor is deliberately low: this is the one tool we hand to people
@@ -14,7 +20,7 @@ signature. Tested on 3.9, 3.10, 3.11, 3.12 and 3.13, by installing from PyPI and
 exact files.
 
 ```console
-$ pip install 'pramana-verify>=0.0.5'
+$ pip install 'pramana-verify>=0.0.6'
 $ pramana-verify production-run.json --pubkey sample-public-key.txt
 OK — 2 event(s), merkle_root=6ec957f1ec1443e56c01bab5440df06cfbdd6bbd67c9e8c35398d02d1a840a3a
 ```
@@ -37,7 +43,18 @@ TAMPERED / INVALID:
   - content_hash does not match this bundle's own content — it was edited after signing
 ```
 
-It exits `0` on a pass and `1` on a failure, so it works as a CI step.
+It exits `0` on a pass and `1` on a failure, so it works as a CI step. Two other codes exist, and
+both mean *"not checked"* rather than *"failed"*: `2` if your `pramana-verify` is too old to read
+the bundle's format, and `3` if the key you supplied is not the key the bundle was signed with —
+
+```console
+$ pramana-verify production-run.json --pubkey 15c9f0c15e8c15c5f55fec6c0357052234e82dfa01eb0e87a613777348806983
+KEY MISMATCH — bundle NOT checked: this bundle was signed by key 20b3d73eb4546cd8… but the key supplied was 15c9f0c15e8c15c5…. Nothing is wrong with the bundle — it has not been checked at all, because it was not signed by the key you asked about. Pramana's published sample bundles are signed by a separate sample-only key (sample-public-key.txt, beside the samples), NOT by a production deployment's key served at /.well-known/pramana-evidence-public-key. Verify a sample with the sample key, and a bundle from your own deployment with that deployment's key.
+```
+
+That is what you get for pointing the production key at a sample. It needs
+`pramana-verify >= 0.0.6`; before that, this exact mistake was reported as `TAMPERED / INVALID`,
+which was wrong and is fixed.
 
 ```console
 $ diff <(python3 -m json.tool production-run.json) \
@@ -116,10 +133,16 @@ recorded. This is a proof of record, not a judgement of conduct.
 
 **These files are signed with a sample key, not the key that signs real bundles.** That key's
 only job is signing the files in this directory. `sample-public-key.txt` checks these four files
-and nothing else — a real Pramana bundle will not verify against it, and that is correct. We do
-not yet publish the production public key at a stable URL, so checking a real bundle still means
-obtaining its key from us. That is not the same as independent verification and is not claimed
-as such.
+and nothing else — a real Pramana bundle will not verify against it, and that is correct. A
+production deployment publishes its own key at
+`https://reliai.in/api/.well-known/pramana-evidence-public-key`, no account needed, so checking a
+real bundle no longer means asking us for a key.
+
+One limit worth stating plainly: **a bundle carries no key id.** It records
+`signer_public_key_hex`, which this tool uses only to tell you *which* key signed it when you
+supply the wrong one — never to decide that a signature is good. With one key and no rotation that
+changes nothing today, but it means an already-issued bundle has nothing in it to pin against if
+the key ever changes.
 
 **`pramana-verify` is a separate package from the SDK.** It has no network code and no account
 concept. Its source ships in the sdist on PyPI, so you can read exactly what the check does
